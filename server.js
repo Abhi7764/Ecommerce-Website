@@ -1,5 +1,6 @@
 const express=require("express");
 const app=express();
+<<<<<<< HEAD
 //const fs=require("fs");
 const cookieparser=require("cookie-parser");
 const session=require("express-session");
@@ -115,4 +116,102 @@ app.post("/login",(req,res)=>{
 
 app.listen(3000,(err)=>{
     console.log("Server Started....");
+=======
+const fs=require('fs');
+const path=require("path");
+
+const cookieparser=require("cookie-parser");
+const session=require("express-session")
+
+const oneday=1000*60*60*24;
+app.use(cookieparser());
+app.use(session({
+    saveUninitialized:true,
+    ressave:false,
+    secret:"dsmgfdweiu&*3ddd",
+    cookie:{maxAge:oneday}
+}));
+ 
+app.use(express.static("public"));
+app.use(express.urlencoded());
+
+const userroutes=require("./routing/userroutes");
+app.use("/users",test,userroutes);
+
+const adminroutes=require("./routing/adminroutes");
+app.use("/admin",admintest,adminroutes);
+
+function test(req,res,next){
+    if(req.session.username)
+        next();
+    else{
+        res.redirect("/");
+    }
+}
+
+function admintest(req,res,next){
+    if(req.session.role=="admin")
+        next();
+    else{
+        res.redirect("/");
+    }
+}
+app.get("/",(req,res)=>{
+    if(req.session.username){
+        res.sendFile(path.join(__dirname,"./public/dashboard.html"));
+        return;
+    }
+    res.sendFile(__dirname+"/public/login.html");
+})
+//!Authentication
+
+app.get("/login",(req,res)=>{
+    //console.log(req.session);
+    if(req.session.username)
+        res.redirect("/dashboard");
+    else
+        res.sendFile(__dirname+"/public/login.html");
+})
+
+app.get("/dashboard",(req,res)=>{
+    if(req.session.username)
+        res.sendFile(path.join(__dirname,"./public/dashboard.html"));
+        //res.sendFile(__dirname+"/public/dashboard.html");
+    else
+        res.redirect('/login');
+    
+})
+
+app.get("/logout",(req,res)=>{
+    req.session.destroy();
+    res.redirect("/login");
+})
+
+app.post("/login",(req,res)=>{
+    fs.readFile("users.txt","utf-8",(err,data)=>{
+        //console.log(req.body)
+        let records = JSON.parse(data);
+        let results=records.filter((item)=>{
+            if(item.username == req.body.username && item.password ==req.body.password){
+                return true;
+            }
+        })
+        if(results.length==0){
+            res.send("Invalid User/Password");
+        }
+        else{
+            // res.send("Login Successfully....");
+            req.session.username=req.body.username; 
+            req.session.role=results[0].role;
+
+            res.redirect("/dashboard");
+        }
+    })
+})
+app.listen(3000,(err)=>{
+    if(err)
+        console.log("Server can not started");
+    else
+        console.log("Server started.....");
+>>>>>>> da28389 (Initial commit)
 })

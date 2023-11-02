@@ -2,16 +2,24 @@
     {
         "username":"admin",
         "password":"password",
+<<<<<<< HEAD
         "Name":"Administrator"
     },
     {
         "username":"user",
         "password":"pass",
         "Name":"John"
+=======
+        "role":"admin"
+>>>>>>> da28389 (Initial commit)
     },
     {
         "username":"Abhi",
         "password":"1234",
+<<<<<<< HEAD
         "Name":"Abhi"
+=======
+        "role":"user"
+>>>>>>> da28389 (Initial commit)
     }
 ]
