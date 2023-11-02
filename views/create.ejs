@@ -1,0 +1,12 @@
+<%-include("header")%>
+<center>
+    Create EJS application
+    <form action="/products/add" method="post">
+        Name: <input type="text" name="name" /><br><br>
+        Price: <input type="number" name="price" /><br><br>
+        Description: <textarea name="description"></textarea><br><br>
+        <input type="submit" value="Add">
+    </form>
+</center>
+
+<%-include("footer")%>

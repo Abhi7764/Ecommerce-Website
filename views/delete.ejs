@@ -1,0 +1,16 @@
+<%-include("header")%>
+<center>
+    Delete Ejs application
+    <%products.forEach((item)=>{%>
+    <form action="/products/delete" method="post">
+        <input type="hidden" name="_id" value="<%=item._id%>">
+        Name: <input type="text" readonly name="name" value="<%=item.name%>"/><br><br>
+        Price: <input type="number" readonly name="price" value="<%=item.price%>" /><br><br>
+        Description: <textarea readonly name="description"/><%=item.description%></textarea><br><br>
+        <input type="submit" value="Delete Item"> 
+    </form>
+    <%})%>
+</center>
+
+<%-include("footer")%>
+    

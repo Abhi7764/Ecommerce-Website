@@ -1,0 +1,16 @@
+<%-include("header")%>
+<center>
+    Edit Ejs application
+    <%products.forEach((item)=>{%>
+    <form action="/products/edit" method="post">
+        <input type="hidden" name="_id" value="<%=item._id%>">
+        Name: <input type="text" name="name" value="<%=item.name%>"/><br><br>
+        Price: <input type="number" name="price" value="<%=item.price%>" /><br><br>
+        Description: <textarea name="description"/><%=item.description%></textarea><br><br>
+        <input type="submit" value="Edit"> 
+    </form>
+    <%})%>
+</center>
+
+<%-include("footer")%>
+    
